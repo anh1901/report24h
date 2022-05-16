@@ -2,6 +2,9 @@
   "name": "24h_report_web",
   "version": "0.1.0",
   "private": true,
+  "engines": {
+    "node": "14.15.5"
+  },
   "dependencies": {
     "@coreui/coreui-plugin-chartjs-custom-tooltips": "^1.2.0",
     "@coreui/coreui-pro": "^2.0.3",

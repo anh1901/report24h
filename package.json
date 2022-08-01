@@ -2,7 +2,7 @@
   "name": "24h_report_web",
   "version": "0.1.0",
   "private": true,
-  "homepage": "https://anh1901.github.io/report24h/",
+  "homepage": "https://anh1901.github.io/",
   "engines": {
     "node": "14.15.5",
     "yarn": "1.22.19"

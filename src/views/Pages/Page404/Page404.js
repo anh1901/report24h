@@ -1,33 +1,22 @@
-import React, { Component } from 'react';
-import { Button, Col, Container, Input, InputGroup, InputGroupAddon, InputGroupText, Row } from 'reactstrap';
-
+import React, { Component } from "react";
 class Page404 extends Component {
   render() {
     return (
-      <div className="app flex-row align-items-center">
-        <Container>
-          <Row className="justify-content-center">
-            <Col md="6">
-              <div className="clearfix">
-                <h1 className="float-left display-3 mr-4">404</h1>
-                <h4 className="pt-3">Oops! You're lost.</h4>
-                <p className="text-muted float-left">The page you are looking for was not found.</p>
-              </div>
-              <InputGroup className="input-prepend">
-                <InputGroupAddon addonType="prepend">
-                  <InputGroupText>
-                    <i className="fa fa-search"></i>
-                  </InputGroupText>
-                </InputGroupAddon>
-                <Input size="16" type="text" placeholder="What are you looking for?" />
-                <InputGroupAddon addonType="append">
-                  <Button color="info">Search</Button>
-                </InputGroupAddon>
-              </InputGroup>
-            </Col>
-          </Row>
-        </Container>
-      </div>
+      <section class="error__page pb-90">
+        <div class="container">
+          <div class="error__text text-center">
+            <h1>404</h1>
+            <h3>'Ấy... Có vẻ trang này không tồn tại!'</h3>
+            <h4>Ây da! Trang này không tồn tại hoặc đã bị xóa</h4>
+            <div class="go-back-btn mt-50">
+              <a class="thm-btn thm-btn__main" href="home_url( '/' )">
+                Về trang chủ
+                <i class="fa fa-long-arrow-right"></i>
+              </a>
+            </div>
+          </div>
+        </div>
+      </section>
     );
   }
 }

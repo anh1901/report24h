@@ -1,97 +1,157 @@
-import React, { Component } from "react";
-import {
-  Button,
-  Card,
-  CardBody,
-  CardGroup,
-  Col,
-  Container,
-  Input,
-  InputGroup,
-  InputGroupAddon,
-  InputGroupText,
-  Row,
-} from "reactstrap";
+import React, { useEffect, useState } from "react";
+import { Button, Col, Row } from "reactstrap";
+import { useFormik } from "formik";
+import { toast } from "react-toastify";
+import loginApi from "../../../api/loginApi";
+import "./styles.css";
 
-class Login extends Component {
-  render() {
-    return (
-      <div className="app flex-row align-items-center">
-        <Container>
-          <Row className="justify-content-center">
-            <Col md="8">
-              <CardGroup>
-                <Card className="p-4">
-                  <a href="/">
-                    <icon className="fa fa-angle-left" />
-                    &nbsp;Trang chủ
-                  </a>
+const Login = (props) => {
+  // const { history } = props;
+  const [isLoading, setIsLoading] = useState(false);
+  // const [values, setValues] = useState([]);
+  const [errorMessage, setErrorMessage] = useState("");
+  const [successMessage, setSuccessMessage] = useState("");
+  //OTP phone login
 
-                  <CardBody>
-                    <h1>Đăng nhập</h1>
-                    <p className="text-muted">
-                      Đăng nhập vào tài khoản của bạn
-                    </p>
-                    <InputGroup className="mb-3">
-                      <InputGroupAddon addonType="prepend">
-                        <InputGroupText>
-                          <i className="icon-user"></i>
-                        </InputGroupText>
-                      </InputGroupAddon>
-                      <Input type="text" placeholder="Tên tài khoản" />
-                    </InputGroup>
-                    <InputGroup className="mb-4">
-                      <InputGroupAddon addonType="prepend">
-                        <InputGroupText>
-                          <i className="icon-lock"></i>
-                        </InputGroupText>
-                      </InputGroupAddon>
-                      <Input type="password" placeholder="Mật khẩu" />
-                    </InputGroup>
-                    <Row>
-                      <Col xs="6">
-                        <Button color="primary" className="px-4">
-                          Đăng nhập
-                        </Button>
-                      </Col>
-                      <Col xs="6" className="text-right">
-                        <Button color="link" className="px-0">
-                          Quên mật khẩu
-                        </Button>
-                      </Col>
-                    </Row>
-                  </CardBody>
-                </Card>
-                <Card
-                  className="text-white bg-primary py-5 d-md-down-none"
-                  style={{ width: 44 + "%" }}
-                >
-                  <CardBody className="text-center">
-                    <div>
-                      <h2>Đăng kí ngay</h2>
-                      <p>
-                        Tham gia ngay để được thông báo về các vụ lừa đảo tinh
-                        vi nhất. Báo cáo những trường hợp xung quanh bạn cho
-                        chúng tôi để giúp xã hội tốt đẹp hơn.
-                      </p>
-                      <Button
-                        color="primary"
-                        className="mt-3"
-                        active
-                        onClick={() => (window.location.href = "/register")}
-                      >
-                        Register Now!
-                      </Button>
-                    </div>
-                  </CardBody>
-                </Card>
-              </CardGroup>
-            </Col>
-          </Row>
-        </Container>
-      </div>
-    );
+  const validate = (values) => {
+    const errors = {};
+    if (!values.password) {
+      errors.password = "Cần nhập mật khẩu";
+    }
+    if (!values.account) {
+      errors.account = "Cần nhập account /số điện thoại";
+    } else if (isNaN(values.account) === true) {
+      if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(values.account)) {
+        errors.account = "Không đúng định dạng account ";
+      } else {
+        return;
+      }
+    } else if (isNaN(values.account) === false) {
+      if (!/((09|03|07|08|05)+([0-9]{8})\b)/g.test(values.account)) {
+        errors.account = "Không đúng định dạng số điện thoại ";
+      } else {
+        return;
+      }
+    }
+    return errors;
+  };
+
+  const formik = useFormik({
+    initialValues: {
+      account: "",
+      password: "",
+    },
+    validate,
+    onSubmit: (values) => {
+      user_login(values);
+    },
+  });
+
+  async function user_login(values) {
+    setIsLoading(true);
+    try {
+      const json = JSON.stringify({
+        account: values.account,
+        password: values.password,
+      });
+      const response = await loginApi.getAll(json);
+      console.log("Response", response);
+      if (!JSON.stringify(response).includes("error")) {
+        localStorage.setItem("user_info", JSON.stringify(response));
+        if (response.role.roleId === 1) {
+          window.location.href = "/";
+        } else {
+          window.location.href = "/admin";
+        }
+      } else {
+        setErrorMessage(
+          "Thông tin đăng nhập không chính xác hãy kiểm tra lại."
+        );
+        setSuccessMessage("");
+      }
+      setIsLoading(false);
+    } catch (e) {
+      toast.error(e.message);
+    }
   }
-}
+  useEffect(() => {}, []);
+
+  return (
+    <div className="form-center">
+      <form className="formFields" onSubmit={formik.handleSubmit}>
+        <h2>Đăng nhập</h2>
+        <p className="text-danger">{errorMessage}</p>
+        <div className="formField">
+          <label className="formFieldLabel" for="account">
+            Email / Số điện thoại
+          </label>
+          <input
+            id="account"
+            name="account"
+            type="text"
+            className="formFieldInput"
+            placeholder="Email / Số điện thoại"
+            value={formik.values.account}
+            onChange={formik.handleChange}
+          />
+        </div>
+        <p className="text-warning field_validate_label">
+          {formik.errors.account ? formik.errors.account : null}{" "}
+        </p>
+        <div className="formField">
+          <label className="formFieldLabel" htmlFor="password">
+            Mật khẩu
+          </label>
+          <input
+            className="formFieldInput"
+            id="password"
+            name="password"
+            type="password"
+            placeholder="Mật khẩu"
+            value={formik.values.password}
+            onChange={formik.handleChange}
+          />
+        </div>
+        <p className="text-warning field_validate_label">
+          {formik.errors.password ? formik.errors.password : null}{" "}
+        </p>
+        <div id="recaptcha-container"></div>
+        <Row>
+          {/* Tạo loading button */}
+          {isLoading ? (
+            <Col md="6">
+              <Button type="submit" color="primary" className="float-left">
+                <span
+                  class="spinner-border spinner-border-sm"
+                  role="status"
+                  aria-hidden="true"
+                ></span>{" "}
+                Đang đăng nhập
+              </Button>
+            </Col>
+          ) : (
+            <Col md="6">
+              <Button type="submit" color="primary" className="float-left">
+                Đăng nhập
+              </Button>
+            </Col>
+          )}
+          <Col md="6" className="text-right">
+            <Button color="link" className="px-0">
+              Quên mật khẩu?
+            </Button>
+          </Col>
+        </Row>
+      </form>
+      <br />
+      <p>
+        <a href="/">
+          <icon className="fa fa-angle-left" />
+          &nbsp;Trang chủ{" "}
+        </a>
+      </p>
+    </div>
+  );
+};
 
 export default Login;

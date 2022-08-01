@@ -8,7 +8,7 @@ import {
   DropdownToggle,
   Progress,
 } from "reactstrap";
-
+import { toast } from "react-toastify";
 const propTypes = {
   notif: PropTypes.bool,
   accnt: PropTypes.bool,
@@ -21,6 +21,21 @@ const defaultProps = {
   tasks: false,
   mssgs: false,
 };
+// const user_info = JSON.parse(localStorage.getItem("user_info"));
+async function logout() {
+  try {
+    window.location.href = "/";
+    localStorage.removeItem("user_info");
+    // await axiosClient.post("/logout", null, {
+    //   headers: {
+    //     token: user_info.refreshToken,
+    //   },
+    // });
+    // this.props.history.push("/");
+  } catch (e) {
+    toast.error(e.message);
+  }
+}
 
 class AdminHeaderDropdown extends Component {
   constructor(props) {
@@ -31,7 +46,9 @@ class AdminHeaderDropdown extends Component {
       dropdownOpen: false,
     };
   }
-
+  redirectPath = (path) => {
+    window.location.href = "/admin/" + path;
+  };
   toggle() {
     this.setState({
       dropdownOpen: !this.state.dropdownOpen,
@@ -116,8 +133,7 @@ class AdminHeaderDropdown extends Component {
             src="https://i.guim.co.uk/img/media/fe1e34da640c5c56ed16f76ce6f994fa9343d09d/0_174_3408_2046/master/3408.jpg?width=1200&height=900&quality=85&auto=format&fit=crop&s=0d3f33fb6aa6e0154b7713a00454c83d"
             className="img-avatar"
             alt="anhwtuan@gmail.com"
-                />
-                
+          />
         </DropdownToggle>
         <DropdownMenu right>
           <DropdownItem header tag="div" className="text-center">
@@ -142,7 +158,7 @@ class AdminHeaderDropdown extends Component {
           <DropdownItem header tag="div" className="text-center">
             <strong>Settings</strong>
           </DropdownItem>
-          <DropdownItem>
+          <DropdownItem onClick={() => this.redirectPath("profile")}>
             <i className="fa fa-user"></i> Profile
           </DropdownItem>
           <DropdownItem>
@@ -160,7 +176,7 @@ class AdminHeaderDropdown extends Component {
           <DropdownItem>
             <i className="fa fa-shield"></i> Lock Account
           </DropdownItem>
-          <DropdownItem>
+          <DropdownItem onClick={logout}>
             <i className="fa fa-lock"></i> Logout
           </DropdownItem>
         </DropdownMenu>

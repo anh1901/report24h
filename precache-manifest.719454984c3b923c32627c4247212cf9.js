@@ -164,44 +164,44 @@ self.__precacheManifest = [
     "url": "/report24h/static/media/banner.6dc50be1.jpg"
   },
   {
-    "revision": "674f50d287a8c48dc19ba404d20fe713",
-    "url": "/report24h/static/media/fontawesome-webfont.674f50d2.eot"
-  },
-  {
-    "revision": "fee66e712a8a08eef5805a46892932ad",
-    "url": "/report24h/static/media/fontawesome-webfont.fee66e71.woff"
-  },
-  {
     "revision": "af7ae505a9eed503f8b8e6982036873e",
     "url": "/report24h/static/media/fontawesome-webfont.af7ae505.woff2"
+  },
+  {
+    "revision": "674f50d287a8c48dc19ba404d20fe713",
+    "url": "/report24h/static/media/fontawesome-webfont.674f50d2.eot"
   },
   {
     "revision": "b06871f281fee6b241d60582ae9369b9",
     "url": "/report24h/static/media/fontawesome-webfont.b06871f2.ttf"
   },
   {
-    "revision": "912ec66d7572ff821749319396470bde",
-    "url": "/report24h/static/media/fontawesome-webfont.912ec66d.svg"
+    "revision": "fee66e712a8a08eef5805a46892932ad",
+    "url": "/report24h/static/media/fontawesome-webfont.fee66e71.woff"
   },
   {
-    "revision": "f33df365d6d0255b586f2920355e94d7",
-    "url": "/report24h/static/media/Simple-Line-Icons.f33df365.eot"
+    "revision": "912ec66d7572ff821749319396470bde",
+    "url": "/report24h/static/media/fontawesome-webfont.912ec66d.svg"
   },
   {
     "revision": "0cb0b9c589c0624c9c78dd3d83e946f6",
     "url": "/report24h/static/media/Simple-Line-Icons.0cb0b9c5.woff2"
   },
   {
+    "revision": "f33df365d6d0255b586f2920355e94d7",
+    "url": "/report24h/static/media/Simple-Line-Icons.f33df365.eot"
+  },
+  {
     "revision": "d2285965fe34b05465047401b8595dd0",
     "url": "/report24h/static/media/Simple-Line-Icons.d2285965.ttf"
   },
   {
-    "revision": "78f07e2c2a535c26ef21d95e41bd7175",
-    "url": "/report24h/static/media/Simple-Line-Icons.78f07e2c.woff"
-  },
-  {
     "revision": "2a103029dda6ab1bc9c8b0ee72536e41",
     "url": "/report24h/static/media/Simple-Line-Icons.2a103029.svg"
+  },
+  {
+    "revision": "78f07e2c2a535c26ef21d95e41bd7175",
+    "url": "/report24h/static/media/Simple-Line-Icons.78f07e2c.woff"
   },
   {
     "revision": "8c275131c42726c652afaeb4d3051c41",

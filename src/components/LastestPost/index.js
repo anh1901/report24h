@@ -1,12 +1,11 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
-import video1 from "../../doc/img/video/video1.jpg";
 import FontAwesome from "../uiStyle/FontAwesome";
 import ModalVideo from "react-modal-video";
 import PopularPosts from "../PopularPosts";
 import moment from "moment";
 
-const LastestPost = ({ className, dark }) => {
+const LastestPost = ({ className, dark, data }) => {
   const [vModal, setvModal] = useState(false);
   // MÃ Video Youtube
   const [videoId] = useState("4Z-ayfkRiSI");
@@ -48,13 +47,13 @@ const LastestPost = ({ className, dark }) => {
                     <Link to="#">{moment().format("DD.MM.YYYY")}</Link>
                   </div>
                   <h4>
-                    <Link to="#">Sài gòn có gì chơi??</Link>
+                    <Link to="#">Sài gòn có gì chơi?? (Test video)</Link>
                   </h4>
                 </div>
               </div>
             </div>
             <div className="col-lg-4">
-              <PopularPosts />
+              <PopularPosts data={data} />
             </div>
           </div>
         </div>

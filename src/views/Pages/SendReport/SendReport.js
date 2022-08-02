@@ -26,9 +26,7 @@ import categoryApi from "../../../api/categoryApi";
 import { getDownloadURL, ref, uploadBytesResumable } from "firebase/storage";
 import storage from "../../../firebase/firebaseConfig";
 import { toast } from "react-toastify";
-const animatedComponents = makeAnimated();
 //testing
-//multiple select option mock data
 
 const SendReport = () => {
   const user_info = JSON.parse(localStorage.getItem("user_info"));

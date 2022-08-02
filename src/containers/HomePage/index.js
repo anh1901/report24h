@@ -1,4 +1,4 @@
-import React, { Fragment } from "react";
+import React, { Fragment, useEffect, useState } from "react";
 import PostGallery from "../../components/PostGallery";
 import TrendingNews from "../../components/TrendingNews";
 import FollowUs from "../../components/FollowUs";
@@ -9,6 +9,7 @@ import NewsLetter from "../../components/NewsLetter";
 // images
 import LastestPost from "../../components/LastestPost";
 import RecommendedNews from "../../components/RecommededNews";
+import postApi from "../../api/postApi";
 
 const recommendeds = [
   {
@@ -61,22 +62,45 @@ const recommendeds = [
 ];
 
 const HomePage = () => {
+  const [postList, setPostList] = useState([]);
+  const [temp, setTemp] = useState(0);
+  const loadPostList = async () => {
+    try {
+      const params = { Status: 3 };
+      const response = await postApi.getByStatus(params);
+      localStorage.setItem(
+        "carousel-post",
+        JSON.stringify(response.slice(0, 4))
+      );
+      setPostList(JSON.parse(localStorage.getItem("carousel-post")));
+    } catch (err) {
+      console.log(err.message);
+    }
+  };
+  useEffect(() => {
+    setInterval(() => {
+      setTemp((prevTemp) => prevTemp + 1);
+    }, 5000);
+  }, []);
+  useEffect(() => {
+    loadPostList();
+  }, [temp]);
   return (
     <Fragment>
-      <PostGallery className="fifth_bg" />
+      <PostGallery className="fifth_bg" data={postList} />
       <div className="container">
         <div className="row">
           <div className="col-lg-8">
-            <TrendingNews />
+            <TrendingNews data={postList} />
           </div>
           <div className="col-md-12 col-lg-4">
             <FollowUs title="Theo dõi tại" />
-            <MostView />
+            <MostView data={postList} />
           </div>
         </div>
       </div>
-      <MixCarousel className="half_bg1" />
-      <LastestPost className="pt30 half_bg60" />
+      <MixCarousel className="half_bg1" data={postList} />
+      <LastestPost className="pt30 half_bg60" data={postList} />
       <div className="entertrainments">
         <div className="container">
           <div className="row">
@@ -92,7 +116,7 @@ const HomePage = () => {
               <div className="entertrainment_carousel mb30">
                 <div className="entertrainment_item">
                   <div className="row justify-content-center">
-                    <RecommendedNews recommended={recommendeds} />
+                    <RecommendedNews data={postList} />
                   </div>
                 </div>
               </div>
@@ -101,7 +125,7 @@ const HomePage = () => {
             <div className="col-lg-4">
               <div className="row">
                 <div className="col-lg-12">
-                  <MostShareWidget title="Chia sẻ nhiều" />
+                  <MostShareWidget title="Chia sẻ nhiều" data={postList} />
                 </div>
                 <div className="col-lg-12">
                   <NewsLetter />
